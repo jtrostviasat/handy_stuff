@@ -34,7 +34,9 @@ Initial library layout.
 - `src/handy_log.c` (the library's only compiled unit)
 - `tools/generate_handle_array_header.py` + example config
 - `tools/generate_container_header.py` — type-specific `vec`/`ring`/`map_u64`/`map_str`
-- `tools/amalgamate.py` — single-file `handy_all.h` + `handy_all.c` emitter
+- `tools/amalgamate.py` — emits an STB-style single-header build
+  (`handy_all.h`). One TU defines `HANDY_IMPLEMENTATION` to pull in the
+  compiled bodies. `--two-files` keeps the legacy `.h` + `.c` split.
 - `tools/generate_compile_commands.py` — `compile_commands.json` emitter for
   unity builds
 - `tests/handy_test.h` micro test harness and `tests/test_basics.c`

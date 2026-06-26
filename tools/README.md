@@ -65,15 +65,30 @@ depends on `handy/handy_str.h`. `vec`, `map_u64`, and `map_str` use
 
 ## `amalgamate.py`
 
-Emit single-file `handy_all.h` + `handy_all.c` from the headers under
-`include/handy/` and `src/`:
+Emit a single-header (STB-style) build of the entire handy library:
 
 ```sh
 python tools/amalgamate.py --out-dir amalgamated
+# wrote amalgamated/handy_all.h
 ```
 
-Drop the two files into any project, compile `handy_all.c`, and `#include
-"handy_all.h"`. No build system or `-Iinclude` required.
+Use it like `stb_image.h`:
+
+```c
+// In every TU that needs handy:
+#include "handy_all.h"
+
+// In exactly one TU (e.g. handy_impl.c):
+#define HANDY_IMPLEMENTATION
+#include "handy_all.h"
+```
+
+The single file contains every public header plus the compiled bodies of
+`src/*.c`, guarded by `#ifdef HANDY_IMPLEMENTATION`. No `-Iinclude`, no
+extra source files, no build-system wiring required.
+
+Pass `--two-files` to instead emit a legacy split (`handy_all.h` +
+`handy_all.c`) where you compile the `.c` yourself.
 
 ## `generate_compile_commands.py`
 

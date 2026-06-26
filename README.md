@@ -122,12 +122,18 @@ fully-qualified `hs_option_*` API.
 
 - `tools/generate_handle_array_header.py` — per-type handle pool/array
   generator. See `tools/README.md`.
-- `tools/amalgamate.py` — emit single-file `handy_all.h` + `handy_all.c`
-  for drop-in vendoring without a build system:
+- `tools/amalgamate.py` — emit a single-header (STB-style) build of the
+  entire library:
 
   ```sh
   python tools/amalgamate.py --out-dir amalgamated
+  # then in your project:
+  #   #include "handy_all.h"                     (everywhere)
+  #   #define HANDY_IMPLEMENTATION               (in exactly one .c)
+  #   #include "handy_all.h"
   ```
+
+  Pass `--two-files` for the legacy `handy_all.h` + `handy_all.c` split.
 
 - `tools/generate_container_header.py` — emit a type-specific container
   header (`vec`, `ring`, `map_u64`, or `map_str`):
