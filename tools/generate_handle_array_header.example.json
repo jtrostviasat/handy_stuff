@@ -1,0 +1,6 @@
+{
+  "value_type": "struct telemetry_sample",
+  "prefix": "telemetry",
+  "option_type_name": "telemetry",
+  "output": "telemetry_handle_array.h"
+}
